@@ -209,7 +209,7 @@ namespace MQTTnet.Server
                     await _retainedMessagesManager.HandleMessageAsync(sender?.ClientId, applicationMessage).ConfigureAwait(false);
                 }
 
-                foreach (var clientSession in _sessions.Values)
+                foreach (var clientSession in _sessions.GetNonBlocking(s => s.Values))
                 {
                     clientSession.EnqueueApplicationMessage(
                         applicationMessage,
